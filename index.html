@@ -251,6 +251,14 @@
     border-radius: 9px; padding: 14px 16px; color: var(--ink); font-size: 0.85rem; line-height: 1.5;
   }
   .review-notice strong { color: #0384a3; }
+  .review-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  .review-btn {
+    font-family: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    background: var(--charter-blue); color: #fff; border: none; border-radius: 8px;
+    padding: 9px 15px; text-decoration: none; display: inline-block; line-height: 1.2;
+    transition: box-shadow .15s, background .15s;
+  }
+  .review-btn:hover { background: #24376f; box-shadow: 0 3px 10px rgba(44,66,133,.28); }
   a.link { color: var(--aqua); font-weight: 600; text-decoration: none; }
   a.link:hover { text-decoration: underline; }
 </style>
@@ -493,7 +501,11 @@
 
   <footer>
     <div class="review-notice">
-      <strong>A note for schools:</strong> alongside your catalog, make sure your community has a clear way to raise a concern. Post a contact person or a written procedure for anyone who wants to request that a book or material be reviewed — and share how those requests are handled. <a class="link" href="#" id="reviewLink">See a ready-to-adopt template &amp; form →</a>
+      <strong>A note for schools:</strong> alongside your catalog, make sure your community has a clear way to raise a concern. Post a contact person or a written procedure for anyone who wants to request that a book or material be reviewed — and share how those requests are handled.
+      <div class="review-btns">
+        <button class="review-btn" id="reviewLink" type="button">Sample Policy / Procedure</button>
+        <a class="review-btn" href="reconsideration-request-form.pdf" target="_blank" rel="noopener">Form for Reconsideration of Materials</a>
+      </div>
     </div>
     Built for ICIC · Reads spines with Claude, confirms details via
     <a class="link" href="https://books.google.com" target="_blank" rel="noopener">Google Books</a> and
