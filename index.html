@@ -233,6 +233,12 @@
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
 
   footer { text-align: center; color: var(--muted); font-size: 0.8rem; padding: 30px 20px 40px; }
+  .review-notice {
+    max-width: 620px; margin: 0 auto 22px; text-align: left;
+    background: var(--ok-bg); border: 1px solid #b7e6f0; border-left: 4px solid var(--aqua);
+    border-radius: 9px; padding: 14px 16px; color: var(--ink); font-size: 0.85rem; line-height: 1.5;
+  }
+  .review-notice strong { color: #0384a3; }
   a.link { color: var(--aqua); font-weight: 600; text-decoration: none; }
   a.link:hover { text-decoration: underline; }
 </style>
@@ -408,6 +414,9 @@
   </section>
 
   <footer>
+    <div class="review-notice">
+      <strong>A note for schools:</strong> alongside your catalog, make sure your community has a clear way to raise a concern. Post a contact person or a written procedure for anyone who wants to request that a book or material be reviewed — and share how those requests are handled.
+    </div>
     Built for ICIC · Reads spines with Claude, confirms details via
     <a class="link" href="https://books.google.com" target="_blank" rel="noopener">Google Books</a> and
     <a class="link" href="https://openlibrary.org" target="_blank" rel="noopener">Open Library</a>.
