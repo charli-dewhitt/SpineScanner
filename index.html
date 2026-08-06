@@ -111,6 +111,17 @@
   .help-note { background: #e6f7fb; border: 1px solid #b7e6f0; border-radius: 9px; padding: 13px 15px; margin-top: 14px; }
   .help-note p { font-size: 0.87rem; } .help-note strong { color: #0384a3; }
   .rv-fill { color: var(--orange); font-weight: 600; }
+  .rv-form { margin-top: 4px; }
+  .rv-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .rv-field { margin-bottom: 12px; }
+  .rv-field label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--charter-blue); margin-bottom: 5px; }
+  .rv-field input, .rv-field select, .rv-field textarea {
+    width: 100%; font-family: inherit; font-size: 0.88rem; color: var(--ink);
+    border: 1.5px solid var(--line); border-radius: 7px; padding: 9px 11px; background: #fff;
+  }
+  .rv-field textarea { resize: vertical; }
+  .rv-field input:focus, .rv-field select:focus, .rv-field textarea:focus { outline: none; border-color: var(--aqua); }
+  @media (max-width: 520px) { .rv-row2 { grid-template-columns: 1fr; } }
   @media (max-width: 520px) { .help-cols { grid-template-columns: 1fr; } .help-modal { padding: 30px 22px 26px; } }
 
   main { padding: 32px 24px 80px; }
@@ -377,18 +388,40 @@
         <li>The process is transparent, and the outcome is shared in writing.</li>
       </ul>
 
-      <h3>Request form — fields to include</h3>
-      <ul class="help-list">
-        <li>Requester name, date, email, phone, and role (parent, staff, student, community).</li>
-        <li>Title and author of the material, and where it was encountered (library, classroom, assigned reading).</li>
-        <li>The specific concern, in the requester's own words.</li>
-        <li>Whether they read or viewed the material in full — and if not, which parts.</li>
-        <li>The outcome they are requesting.</li>
-        <li>Signature, plus an office-use line for who received it and when.</li>
-      </ul>
+      <h3>Request form</h3>
+      <p style="font-size:0.85rem;color:var(--muted);margin-bottom:12px">Fill this out on screen, then use <strong>Print / Save as PDF</strong> to keep or submit a copy.</p>
+
+      <div class="rv-form">
+        <div class="rv-row2">
+          <div class="rv-field"><label>Your name</label><input type="text"></div>
+          <div class="rv-field"><label>Date</label><input type="text"></div>
+        </div>
+        <div class="rv-row2">
+          <div class="rv-field"><label>Email</label><input type="text"></div>
+          <div class="rv-field"><label>Phone</label><input type="text"></div>
+        </div>
+        <div class="rv-field"><label>I am a</label>
+          <select><option value="">Select one…</option><option>Parent / guardian</option><option>Staff member</option><option>Student</option><option>Community member</option></select>
+        </div>
+        <div class="rv-row2">
+          <div class="rv-field"><label>Title of the material</label><input type="text"></div>
+          <div class="rv-field"><label>Author / creator</label><input type="text"></div>
+        </div>
+        <div class="rv-field"><label>Where did you encounter it?</label>
+          <select><option value="">Select one…</option><option>Library</option><option>Classroom</option><option>Assigned reading</option><option>Other</option></select>
+        </div>
+        <div class="rv-field"><label>What is your specific concern? Please be as clear as you can.</label><textarea rows="4"></textarea></div>
+        <div class="rv-field"><label>Did you read / view the material in full? If not, which parts?</label><textarea rows="2"></textarea></div>
+        <div class="rv-field"><label>What outcome are you requesting?</label><textarea rows="2"></textarea></div>
+        <div class="rv-row2">
+          <div class="rv-field"><label>Signature</label><input type="text"></div>
+          <div class="rv-field"><label>Office use — received by / date</label><input type="text"></div>
+        </div>
+        <button class="btn btn-primary" id="printReview" type="button" style="margin-top:6px">Print / Save as PDF</button>
+      </div>
 
       <div class="help-note">
-        <p><strong>Tip:</strong> keep a copy of every request and its written decision on file. A printable version of this template is also in your ICIC deploy folder.</p>
+        <p><strong>Tip:</strong> keep a copy of every request and its written decision on file. A print-ready version is also in your ICIC deploy folder.</p>
       </div>
     </div>
   </div>
@@ -935,7 +968,48 @@ document.querySelectorAll('.help-btn').forEach(btn => {
   btn.addEventListener('click', () => openHelp(btn.dataset.help));
 });
 $('reviewLink').addEventListener('click', e => { e.preventDefault(); openHelp('review'); });
+$('printReview').addEventListener('click', printReviewForm);
 $('helpClose').addEventListener('click', closeHelp);
+
+function printReviewForm() {
+  const panel = $('help-review');
+  const val = el => {
+    if (!el) return '';
+    if (el.tagName === 'SELECT') return el.value || '';
+    return el.value || '';
+  };
+  const inputs = panel.querySelectorAll('.rv-field input, .rv-field select, .rv-field textarea');
+  const labels = panel.querySelectorAll('.rv-field label');
+  let rows = '';
+  inputs.forEach((inp, i) => {
+    const label = labels[i] ? labels[i].textContent : '';
+    const v = escapeHtml(val(inp)) || '&nbsp;';
+    rows += `<div class="pf"><div class="pl">${escapeHtml(label)}</div><div class="pv">${v}</div></div>`;
+  });
+  const w = window.open('', '_blank');
+  if (!w) { alert('Please allow pop-ups to print the form.'); return; }
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="utf-8"><title>Reconsideration Request</title>
+    <style>
+      body{font-family:Arial,Helvetica,sans-serif;color:#1a2140;max-width:700px;margin:30px auto;padding:0 24px;line-height:1.5}
+      .bar{height:8px;display:flex;margin-bottom:18px}.bar i{flex:1}
+      .bar .b{background:#2C4285}.bar .a{background:#00ABD4}.bar .y{background:#FFCE0A}.bar .o{background:#F7941D}
+      h1{color:#2C4285;font-size:1.4rem;margin:0 0 4px}
+      .sub{color:#6b7291;font-size:.85rem;margin-bottom:18px}
+      .pf{margin-bottom:12px;border-bottom:1px solid #e3e6f0;padding-bottom:8px}
+      .pl{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#2C4285;margin-bottom:3px}
+      .pv{font-size:.95rem;white-space:pre-wrap;min-height:1.1em}
+      .foot{margin-top:20px;font-size:.72rem;color:#6b7291}
+    </style></head><body>
+    <div class="bar"><i class="b"></i><i class="a"></i><i class="y"></i><i class="o"></i></div>
+    <h1>Reconsideration Request</h1>
+    <div class="sub">Request to review a book or material · submitted to the school's designated contact</div>
+    ${rows}
+    <div class="foot">Indiana Charter Innovation Center · Keep a copy of this request and its written decision on file.</div>
+    </body></html>`);
+  w.document.close();
+  w.focus();
+  setTimeout(() => w.print(), 300);
+}
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) closeHelp(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHelp(); });
 </script>
