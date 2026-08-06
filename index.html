@@ -110,6 +110,7 @@
   .help-list li::before { content: "→"; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
   .help-note { background: #e6f7fb; border: 1px solid #b7e6f0; border-radius: 9px; padding: 13px 15px; margin-top: 14px; }
   .help-note p { font-size: 0.87rem; } .help-note strong { color: #0384a3; }
+  .rv-fill { color: var(--orange); font-weight: 600; }
   @media (max-width: 520px) { .help-cols { grid-template-columns: 1fr; } .help-modal { padding: 30px 22px 26px; } }
 
   main { padding: 32px 24px 80px; }
@@ -346,6 +347,50 @@
         <p><strong>On a phone or tablet?</strong> Install the free <strong>Google Sheets</strong> app and upload the CSV through the Drive app the same way. A computer is easier for a big catalog.</p>
       </div>
     </div>
+
+    <div class="help-content hidden" id="help-review">
+      <h2 class="help-title">Requesting review of a book or material</h2>
+      <p class="help-lead">A ready-to-adopt procedure your school can post, plus a request form. Replace the highlighted parts with your school's details.</p>
+
+      <div class="help-note">
+        <p><strong>Before you adopt this:</strong> this is a starting template, not legal advice. Have your board or authorizer review it against your school's policies and Indiana requirements, then approve it as official procedure. ICIC members can reach out for help tailoring it.</p>
+      </div>
+
+      <h3>1 · Who to contact</h3>
+      <p style="font-size:0.88rem">Direct all requests to <span class="rv-fill">[name / role]</span>, <span class="rv-fill">[email]</span>, <span class="rv-fill">[phone]</span>. Requests may also be dropped off at <span class="rv-fill">[front office location]</span>.</p>
+
+      <h3>2 · How the process works</h3>
+      <ol class="help-steps">
+        <li><strong>Submit a request.</strong> Complete the request form (below) and return it to the contact above.</li>
+        <li><strong>Acknowledgement.</strong> The school confirms receipt within <span class="rv-fill">[e.g. 5 school days]</span> and explains next steps.</li>
+        <li><strong>Material stays available</strong> during the review, unless <span class="rv-fill">[school/board policy]</span> directs otherwise.</li>
+        <li><strong>Review committee</strong> — typically <span class="rv-fill">[an administrator, a teacher, a library staff member, and a parent representative]</span> — reviews the full material in context.</li>
+        <li><strong>Decision.</strong> A written decision goes to the requester within <span class="rv-fill">[e.g. 30 school days]</span>, with reasons.</li>
+        <li><strong>Appeal.</strong> If the requester disagrees, they may appeal to <span class="rv-fill">[e.g. the head of school, then the board]</span>.</li>
+      </ol>
+
+      <h3>3 · Principles we follow</h3>
+      <ul class="help-list">
+        <li>Every request is taken seriously and handled respectfully.</li>
+        <li>Decisions consider the material as a whole, not isolated passages.</li>
+        <li>We weigh educational value, age-appropriateness, and the range of families we serve.</li>
+        <li>The process is transparent, and the outcome is shared in writing.</li>
+      </ul>
+
+      <h3>Request form — fields to include</h3>
+      <ul class="help-list">
+        <li>Requester name, date, email, phone, and role (parent, staff, student, community).</li>
+        <li>Title and author of the material, and where it was encountered (library, classroom, assigned reading).</li>
+        <li>The specific concern, in the requester's own words.</li>
+        <li>Whether they read or viewed the material in full — and if not, which parts.</li>
+        <li>The outcome they are requesting.</li>
+        <li>Signature, plus an office-use line for who received it and when.</li>
+      </ul>
+
+      <div class="help-note">
+        <p><strong>Tip:</strong> keep a copy of every request and its written decision on file. A printable version of this template is also in your ICIC deploy folder.</p>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -415,7 +460,7 @@
 
   <footer>
     <div class="review-notice">
-      <strong>A note for schools:</strong> alongside your catalog, make sure your community has a clear way to raise a concern. Post a contact person or a written procedure for anyone who wants to request that a book or material be reviewed — and share how those requests are handled. <a class="link" href="review-request-procedure.html" target="_blank" rel="noopener">Use our ready-to-adopt template &amp; form →</a>
+      <strong>A note for schools:</strong> alongside your catalog, make sure your community has a clear way to raise a concern. Post a contact person or a written procedure for anyone who wants to request that a book or material be reviewed — and share how those requests are handled. <a class="link" href="#" id="reviewLink">See a ready-to-adopt template &amp; form →</a>
     </div>
     Built for ICIC · Reads spines with Claude, confirms details via
     <a class="link" href="https://books.google.com" target="_blank" rel="noopener">Google Books</a> and
@@ -880,6 +925,7 @@ $('gatePass').addEventListener('keydown', e => { if (e.key === 'Enter') submitPa
 function openHelp(which) {
   $('help-use').classList.toggle('hidden', which !== 'use');
   $('help-csv').classList.toggle('hidden', which !== 'csv');
+  $('help-review').classList.toggle('hidden', which !== 'review');
   $('helpOverlay').classList.remove('hidden');
   $('helpOverlay').scrollTop = 0;
 }
@@ -888,6 +934,7 @@ function closeHelp() { $('helpOverlay').classList.add('hidden'); }
 document.querySelectorAll('.help-btn').forEach(btn => {
   btn.addEventListener('click', () => openHelp(btn.dataset.help));
 });
+$('reviewLink').addEventListener('click', e => { e.preventDefault(); openHelp('review'); });
 $('helpClose').addEventListener('click', closeHelp);
 $('helpOverlay').addEventListener('click', e => { if (e.target === $('helpOverlay')) closeHelp(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeHelp(); });
