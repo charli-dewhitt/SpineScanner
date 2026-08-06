@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spine Scanner — Photo Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --charter-blue: #2C4285;
+    --aqua: #00ABD4;
+    --pencil: #FFCE0A;
+    --orange: #F7941D;
+    --ink: #1a2140;
+    --muted: #6b7291;
+    --line: #e3e6f0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Poppins', system-ui, sans-serif;
+    color: var(--ink); line-height: 1.5; background: #eef0f6;
+    padding: 24px;
+  }
+  .page {
+    max-width: 8.5in; margin: 0 auto; background: #fff;
+    padding: 0 0 34px; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 6px 24px rgba(26,33,64,.12);
+  }
+  .ribbon { height: 8px; display: flex; }
+  .ribbon span { flex: 1; }
+  .b { background: var(--charter-blue); } .a { background: var(--aqua); }
+  .y { background: var(--pencil); } .o { background: var(--orange); }
+
+  .head { padding: 26px 40px 20px; border-bottom: 2px solid var(--line); }
+  .kicker { font-size: 0.72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--aqua); }
+  h1 { font-size: 1.7rem; font-weight: 700; letter-spacing: -0.02em; color: var(--charter-blue); margin-top: 4px; }
+  .head p { color: var(--muted); margin-top: 6px; font-weight: 300; max-width: 90%; }
+
+  .body { padding: 24px 40px 0; }
+  h2 { font-size: 1.02rem; font-weight: 700; color: var(--charter-blue); margin: 22px 0 10px;
+       display: flex; align-items: center; gap: 9px; }
+  h2 .n { background: var(--charter-blue); color: #fff; width: 24px; height: 24px; border-radius: 50%;
+          display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; flex: none; }
+  h2:first-child { margin-top: 4px; }
+
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 28px; margin-top: 4px; }
+  .do, .dont { border-radius: 9px; padding: 14px 16px; }
+  .do { background: #e9f8ee; border: 1px solid #bfe6cc; }
+  .dont { background: #fdeeee; border: 1px solid #f2c4c4; }
+  .do h3, .dont h3 { font-size: 0.82rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 8px; }
+  .do h3 { color: #1f7a41; } .dont h3 { color: #b23838; }
+  .do ul, .dont ul { list-style: none; }
+  .do li, .dont li { font-size: 0.86rem; padding-left: 20px; position: relative; margin-bottom: 6px; }
+  .do li::before { content: "✓"; position: absolute; left: 0; color: #1f7a41; font-weight: 700; }
+  .dont li::before { content: "✕"; position: absolute; left: 0; color: #b23838; font-weight: 700; }
+
+  .expect { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 6px; }
+  .card { border: 1px solid var(--line); border-radius: 9px; padding: 14px 15px; }
+  .card .icon { font-size: 1.3rem; }
+  .card h4 { font-size: 0.9rem; font-weight: 600; margin: 6px 0 4px; color: var(--charter-blue); }
+  .card p { font-size: 0.82rem; color: var(--muted); }
+
+  .flags { background: #fff8e6; border: 1px solid #f6dd9a; border-radius: 9px; padding: 14px 16px; margin-top: 6px; }
+  .flags p { font-size: 0.87rem; }
+  .flags b { color: #9a6a00; }
+
+  .steps { counter-reset: s; }
+  .steps li { list-style: none; font-size: 0.9rem; margin-bottom: 8px; padding-left: 30px; position: relative; }
+  .steps li::before {
+    counter-increment: s; content: counter(s);
+    position: absolute; left: 0; top: -1px; background: var(--aqua); color: #fff;
+    width: 21px; height: 21px; border-radius: 50%; font-size: 0.75rem; font-weight: 700;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  .foot { margin: 26px 40px 0; padding-top: 14px; border-top: 1px solid var(--line);
+          font-size: 0.78rem; color: var(--muted); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { box-shadow: none; border-radius: 0; max-width: none; }
+    h2 { break-after: avoid; }
+    .cols, .expect { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="ribbon"><span class="b"></span><span class="a"></span><span class="y"></span><span class="o"></span></div>
+
+  <div class="head">
+    <div class="kicker">ICIC Library Tools</div>
+    <h1>Photographing Your Shelves</h1>
+    <p>A one-minute guide to getting clean, accurate results from the Spine Scanner. Better photos mean fewer corrections later.</p>
+  </div>
+
+  <div class="body">
+    <h2><span class="n">1</span> How to take the photo</h2>
+    <div class="cols">
+      <div class="do">
+        <h3>Do</h3>
+        <ul>
+          <li>Stand straight in front of the shelf, camera level with the spines.</li>
+          <li>Fill the frame with one shelf (or one section) at a time.</li>
+          <li>Turn on the lights; daylight or bright room light is best.</li>
+          <li>Hold steady and let the camera focus before you tap.</li>
+          <li>Keep spines upright so the text reads left-to-right.</li>
+        </ul>
+      </div>
+      <div class="dont">
+        <h3>Skip</h3>
+        <ul>
+          <li>Angled or tilted shots — text on the ends gets distorted.</li>
+          <li>Whole bookcases from across the room; spines get too small.</li>
+          <li>Glare from a window or flash washing out the titles.</li>
+          <li>Blurry or motion shots — a fuzzy title can't be read.</li>
+          <li>Books lying flat or stacked; scan them standing up.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2><span class="n">2</span> What to expect</h2>
+    <div class="expect">
+      <div class="card">
+        <div class="icon">📖</div>
+        <h4>Titles &amp; authors</h4>
+        <p>Read directly from the spines. Clear, upright text comes through very reliably.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🔢</div>
+        <h4>ISBN, publisher, year</h4>
+        <p>Looked up automatically for each book. Most well-known titles fill in; rarer ones may not.</p>
+      </div>
+      <div class="card">
+        <div class="icon">📝</div>
+        <h4>An editable table</h4>
+        <p>Every result appears in a table you can fix before exporting to a spreadsheet.</p>
+      </div>
+    </div>
+
+    <h2><span class="n">3</span> Why some rows are flagged</h2>
+    <div class="flags">
+      <p>The scanner is honest about uncertainty. When a spine is partly hidden, worn, or hard to read — or when an ISBN is a best guess — that row is <b>flagged with a note</b> in the "Confidence notes" column so you know exactly what to double-check. <b>A flag isn't an error; it's a heads-up.</b> Always give flagged rows a quick look before you rely on the catalog.</p>
+    </div>
+
+    <h2><span class="n">4</span> Start to finish</h2>
+    <ol class="steps">
+      <li>Open the Spine Scanner link and enter your access code.</li>
+      <li>Take or upload one photo per shelf (add several at once if you like).</li>
+      <li>Tap <strong>Scan spines</strong> and wait a few seconds per photo.</li>
+      <li>Review the table — fix any flagged rows, add notes if needed.</li>
+      <li>Tap <strong>Download CSV</strong> and open it in Google Sheets.</li>
+    </ol>
+  </div>
+
+  <div class="foot">
+    <span>Indiana Charter Innovation Center · Spine Scanner</span>
+    <span>Tip: a full shelf scans best in two photos rather than one crowded shot.</span>
+  </div>
+</div>
+</body>
+</html>
